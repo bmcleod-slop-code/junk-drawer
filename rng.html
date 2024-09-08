@@ -1,0 +1,96 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Random Loadout Creator for The Finals</title>
+</head>
+<body>
+
+<button type="button" onclick="rng('Light')">Random Light Loadout</button>
+<button type="button" onclick="rng('Medium')">Random Medium Loadout</button>
+<button type="button" onclick="rng('Heavy')">Random Heavy Loadout</button>
+<button type="button" onclick="rng('holdsUpSpork')">Completely Random Loadout</button>
+
+<p id="changeme"></p>
+
+<script> 
+	const classes = ["Light","Medium","Heavy"];
+	
+	const lightSpecializations = ["Cloaking Device","Evasive Dash","Grappling Hook"];
+	const lightWeapons = ["Sword","Throwing Knives","Sniper","SMG w/o Scope","Shotgun","DMR","SMG w/ Scope","Dagger","Burst Pistol","Silenced Pistol","Bow"];
+	const lightGadgets = ["Breach Charge","Flashbang","Frag Grenade","Gas Grenade","Gateway","Goo Grenade","Glitch Grenade","Smoke Grenade","Sonar Grenade","Stun Gun","Thermal Vision","Tracking Dart","Thermal Bore","Pyro Grenade","Vanishing Bomb"];
+	const lightReserve = lightWeapons.concat(lightGadgets);
+	
+	const mediumSpecializations = ["Dematerializer","Turret","Healing Beam"];
+	const mediumWeapons = ["AK","Shotgun","Revolver","Grenade Launcher","FCAR","Riot Shield","Dual Blades","FAMAS"];
+	const mediumGadgets = ["APS Turret","Data Reshaper","Defib","Explosive Mine","Flashbang","Frag Grenade","Gas Grenade","Gas Mine","Glitch Trap","Goo Grenade","Jump Pad","Pyro Grenade","Zipline"];
+	const mediumReserve = mediumWeapons.concat(mediumGadgets);
+	
+	const heavySpecializations = ["Charge 'n' Slam", "Goo Gun", "Mesh Shield", "Winch Claw"];
+	const heavyWeapons = ["M60","Regular Shotgun","Grenade Launcher","Flamethrower","Sledgehammer","Slug Shotgun","Lewis Gun","Spear"];
+	const heavyGadgets = ["Anti-Grav Cube","Barricade","C4","Dome Shield","Explosive Mine","Flashbang","Frag Grenade","Gas Grenade","Goo Grenade","Proximity Sensor","Pyro Grenade","Pyro Mine","RPG"];
+	const heavyReserve = heavyWeapons.concat(heavyGadgets);
+	
+	function rng(btnClass) {
+		let playerClass = btnClass;
+		if(btnClass == "holdsUpSpork") {
+			playerClass = classes[getRandomInt(classes.length)];
+		}
+		
+		let currentLoadout = [playerClass];
+		
+		if(playerClass == "Light") {
+			//Pick specialization
+			addToLoadout(1, currentLoadout, lightSpecializations);
+			//Pick weapon
+			addToLoadout(1, currentLoadout, lightWeapons);
+			//Pick gadgets
+			addToLoadout(3, currentLoadout, lightGadgets);
+			//Pick reserve
+			addToLoadout(1, currentLoadout, lightWeapons);
+			addToLoadout(3, currentLoadout, lightReserve);
+			//Print
+			printLoadout(currentLoadout);
+		} else if(playerClass == "Medium") {
+			addToLoadout(1, currentLoadout, mediumSpecializations);
+			addToLoadout(1, currentLoadout, mediumWeapons);
+			addToLoadout(3, currentLoadout, mediumGadgets);
+			addToLoadout(1, currentLoadout, mediumWeapons);
+			addToLoadout(3, currentLoadout, mediumReserve);
+			printLoadout(currentLoadout);
+		} else {
+			addToLoadout(1, currentLoadout, heavySpecializations);
+			addToLoadout(1, currentLoadout, heavyWeapons);
+			addToLoadout(3, currentLoadout, heavyGadgets);
+			addToLoadout(1, currentLoadout, heavyWeapons);
+			addToLoadout(3, currentLoadout, heavyReserve);
+			printLoadout(currentLoadout);
+		}
+	}
+	
+	function getRandomInt(max) {
+		return Math.floor(Math.random() * max);
+	}
+	
+	//Pushes n new items to the current loadout from the pool of items
+	function addToLoadout(n, currentLoadout, pool) {
+		for(let i = 0; i < n; i++) {
+			let newAddition = "";
+			do {
+				newAddition = pool[getRandomInt(pool.length)]
+			} while(currentLoadout.includes(newAddition));
+			currentLoadout.push(newAddition);
+		}
+	}
+	
+	function  printLoadout(loadoutArray) {
+		let p = document.getElementById("changeme");
+		p.innerText = "Class: " + loadoutArray[0] + "\n";
+		p.innerText += "Specialization: " + loadoutArray[1] + "\n";
+		p.innerText += "Weapon: " + loadoutArray[2] + "\n";
+		p.innerText += "Gadgets: " + loadoutArray.slice(3,6) + "\n";
+		p.innerText += "Reserve: " + loadoutArray.slice(6) + "\n";
+	}
+</script>
+
+</body>
+</html> 
