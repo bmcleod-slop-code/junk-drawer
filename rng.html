@@ -48,23 +48,20 @@
 			//Pick reserve
 			addToLoadout(1, currentLoadout, lightWeapons);
 			addToLoadout(3, currentLoadout, lightReserve);
-			//Print
-			printLoadout(currentLoadout);
 		} else if(playerClass == "Medium") {
 			addToLoadout(1, currentLoadout, mediumSpecializations);
 			addToLoadout(1, currentLoadout, mediumWeapons);
 			addToLoadout(3, currentLoadout, mediumGadgets);
 			addToLoadout(1, currentLoadout, mediumWeapons);
 			addToLoadout(3, currentLoadout, mediumReserve);
-			printLoadout(currentLoadout);
 		} else {
 			addToLoadout(1, currentLoadout, heavySpecializations);
 			addToLoadout(1, currentLoadout, heavyWeapons);
 			addToLoadout(3, currentLoadout, heavyGadgets);
 			addToLoadout(1, currentLoadout, heavyWeapons);
 			addToLoadout(3, currentLoadout, heavyReserve);
-			printLoadout(currentLoadout);
 		}
+		printLoadout(currentLoadout);
 	}
 	
 	function getRandomInt(max) {
